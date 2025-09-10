@@ -27,86 +27,104 @@
 }
 </script>
   </head>
-  <body class="min-h-screen bg-gradient-to-br from-orange-100 to-orange-200 p-4">
+  <body class="min-h-screen bg-gradient-to-br from-orange-100 to-orange-200">
 
-    <div id="root">
-      <div class="max-w-md mx-auto">
-        <div class="text-center mb-8 pt-8">
-          <h1 class="text-3xl font-bold text-gray-800 mb-2">中科大吃什麼？</h1>
-          <p class="text-gray-600 text-sm">國立台中科技大學附近的美食</p>
-        </div>
-
-        <div class="mb-4 text-center">
-          <p class="text-gray-700 mb-2 font-medium">想吃點什麼？</p>
-          <div class="inline-flex rounded-lg shadow-sm">
-            <label class="cursor-pointer">
-              <input type="radio" name="category" value="all" class="sr-only peer" checked>
-              <div class="py-2 px-4 bg-white text-gray-600 rounded-l-lg peer-checked:bg-orange-400 peer-checked:text-white">都要</div>
-            </label>
-            <label class="cursor-pointer">
-              <input type="radio" name="category" value="food" class="sr-only peer">
-              <div class="py-2 px-4 bg-white text-gray-600 peer-checked:bg-orange-400 peer-checked:text-white">食物</div>
-            </label>
-            <label class="cursor-pointer">
-              <input type="radio" name="category" value="drinks" class="sr-only peer">
-              <div class="py-2 px-4 bg-white text-gray-600 rounded-r-lg peer-checked:bg-orange-400 peer-checked:text-white">飲料</div>
-            </label>
-          </div>
-        </div>
-
-        <div class="mb-6">
-          <button 
-            id="randomButton"
-            class="w-full btn-custom text-white py-3 text-lg font-medium rounded-lg flex items-center justify-center gap-2"
-            >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12H9.5a4.5 4.5 0 0 1 0-9H13"/><path d="M3 12h7.5a4.5 4.5 0 0 0 0-9H6"/><path d="M21 12v.5a4.5 4.5 0 0 1-4.5 4.5H13"/><path d="M3 12v.5a4.5 4.5 0 0 0 4.5 4.5H6"/></svg>
-            隨機選一個
+    <div id="app-container">
+      <div id="main-page" class="page">
+        <div class="fixed top-4 right-4 z-50">
+          <button id="goToSpecial" class="bg-orange-400 hover:bg-orange-500 text-white text-xs px-3 py-1.5 rounded-full shadow-lg">
+            民生校區點我
           </button>
         </div>
 
-        <div id="selectedRestaurantCard" class="hidden mb-6 bg-orange-300 border-none rounded-lg">
-          <div class="p-4 text-center">
-            <h2 id="selectedRestaurantName" class="text-xl font-bold text-gray-800 mb-2"></h2>
-            <div class="flex justify-center mt-3">
-              <button
-                id="openMapButton"
-                class="bg-white hover:bg-gray-50 text-gray-800 border-gray-300 flex items-center gap-2 py-2 px-4 rounded-lg border"
+        <div class="max-w-md mx-auto">
+          <div class="text-center mb-8 pt-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">中科大吃什麼？</h1>
+            <p class="text-gray-600 text-sm">國立台中科技大學附近的美食</p>
+          </div>
+
+          <div class="mb-4 text-center">
+            <p class="text-gray-700 mb-2 font-medium">想吃點什麼？</p>
+            <div class="inline-flex rounded-lg shadow-sm">
+              <label class="cursor-pointer">
+                <input type="radio" name="category" value="all" class="sr-only peer" checked>
+                <div class="py-2 px-4 bg-white text-gray-600 rounded-l-lg peer-checked:bg-orange-400 peer-checked:text-white">都要</div>
+              </label>
+              <label class="cursor-pointer">
+                <input type="radio" name="category" value="food" class="sr-only peer">
+                <div class="py-2 px-4 bg-white text-gray-600 peer-checked:bg-orange-400 peer-checked:text-white">食物</div>
+              </label>
+              <label class="cursor-pointer">
+                <input type="radio" name="category" value="drinks" class="sr-only peer">
+                <div class="py-2 px-4 bg-white text-gray-600 rounded-r-lg peer-checked:bg-orange-400 peer-checked:text-white">飲料</div>
+              </label>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <button 
+              id="randomButton"
+              class="w-full btn-custom text-white py-3 text-lg font-medium rounded-lg flex items-center justify-center gap-2"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                在Google Map上查看
-              </button>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12H9.5a4.5 4.5 0 0 1 0-9H13"/><path d="M3 12h7.5a4.5 4.5 0 0 0 0-9H6"/><path d="M21 12v.5a4.5 4.5 0 0 1-4.5 4.5H13"/><path d="M3 12v.5a4.5 4.5 0 0 0 4.5 4.5H6"/></svg>
+              隨機選一個
+            </button>
             </div>
-          </div>
-        </div>
 
-        <div class="bg-orange-300 border-none rounded-lg">
-          <div class="p-4">
-            <h3 class="text-lg font-bold text-gray-800 mb-4">店家清單</h3>
-    
-            <div class="w-full">
-              <div class="grid w-full grid-cols-2 mb-4 bg-orange-300 rounded-lg">
-                <button id="tabFood" class="tabs-trigger py-2 rounded-l-lg active">食物</button>
-                <button id="tabDrinks" class="tabs-trigger py-2 rounded-r-lg">飲料</button>
-              </div>
-              
-              <div id="contentFood" class="space-y-2">
-                <div id="foodList" class="max-h-64 overflow-y-auto space-y-2">
-                  </div>
-              </div>
-              
-              <div id="contentDrinks" class="hidden space-y-2">
-                <div id="drinksList" class="max-h-64 overflow-y-auto space-y-2">
-                  </div>
+          <div id="selectedRestaurantCard" class="hidden mb-6 bg-orange-300 border-none rounded-lg">
+            <div class="p-4 text-center">
+              <h2 id="selectedRestaurantName" class="text-xl font-bold text-gray-800 mb-2"></h2>
+              <div class="flex justify-center mt-3">
+                <button
+                  id="openMapButton"
+                  class="bg-white hover:bg-gray-50 text-gray-800 border-gray-300 flex items-center gap-2 py-2 px-4 rounded-lg border"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                  在Google Map上查看
+                </button>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="mt-6 text-center">
-          <p class="text-gray-600 text-sm">
-            <a href="https://pine-swamp-64e.notion.site/1f64b71279d480008b2fcaf1522fd1d8" class="text-orange-500 hover:text-orange-600 underline" target="_blank">想新增食物? 點我</a>
-          </p>
-          <p class="text-gray-600 text-sm mt-2">Made with ❤️ by <a href="https://www.instagram.com/charley_0317/" class="text-orange-500 hover:text-orange-600 underline" target="_blank">onedream</a></p>
+          <div class="bg-orange-300 border-none rounded-lg">
+            <div class="p-4">
+              <h3 class="text-lg font-bold text-gray-800 mb-4">店家清單</h3>
+      
+              <div class="w-full">
+                <div class="grid w-full grid-cols-2 mb-4 bg-orange-300 rounded-lg">
+                  <button id="tabFood" class="tabs-trigger py-2 rounded-l-lg active">食物</button>
+                  <button id="tabDrinks" class="tabs-trigger py-2 rounded-r-lg">飲料</button>
+                </div>
+                
+                <div id="contentFood" class="space-y-2">
+                  <div id="foodList" class="max-h-64 overflow-y-auto space-y-2">
+                    </div>
+                </div>
+                
+                <div id="contentDrinks" class="hidden space-y-2">
+                  <div id="drinksList" class="max-h-64 overflow-y-auto space-y-2">
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 text-center">
+            <p class="text-gray-600 text-sm">
+              <a href="https://pine-swamp-64e.notion.site/1f64b71279d480008b2fcaf1522fd1d8" class="text-orange-500 hover:text-orange-600 underline" target="_blank">想新增食物? 點我</a>
+            </p>
+            <p class="text-gray-600 text-sm mt-2">Made with ❤️ by <a href="https://www.instagram.com/charley_0317/" class="text-orange-500 hover:text-orange-600 underline" target="_blank">onedream</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div id="special-page" class="page">
+        <div class="max-w-md mx-auto text-center pt-16">
+          <h1 class="text-3xl font-bold text-gray-800 mb-4">民生吃什麼</h1>
+          <p class="text-gray-600 mb-8">更新中，敬請期待</p>
+          <button id="goBack" class="bg-orange-400 hover:bg-orange-500 text-white py-2 px-6 rounded-lg">
+            返回
+          </button>
         </div>
       </div>
     </div>

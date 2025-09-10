@@ -41,15 +41,15 @@
           <div class="inline-flex rounded-lg shadow-sm">
             <label class="cursor-pointer">
               <input type="radio" name="category" value="all" class="sr-only peer" checked>
-              <div class="py-2 px-4 bg-white text-gray-600 rounded-l-lg peer-checked:bg-orange-500 peer-checked:text-white">都要</div>
+              <div class="py-2 px-4 bg-white text-gray-600 rounded-l-lg peer-checked:bg-orange-400 peer-checked:text-white">都要</div>
             </label>
             <label class="cursor-pointer">
               <input type="radio" name="category" value="food" class="sr-only peer">
-              <div class="py-2 px-4 bg-white text-gray-600 peer-checked:bg-orange-500 peer-checked:text-white">食物</div>
+              <div class="py-2 px-4 bg-white text-gray-600 peer-checked:bg-orange-400 peer-checked:text-white">食物</div>
             </label>
             <label class="cursor-pointer">
               <input type="radio" name="category" value="drinks" class="sr-only peer">
-              <div class="py-2 px-4 bg-white text-gray-600 rounded-r-lg peer-checked:bg-orange-500 peer-checked:text-white">飲料</div>
+              <div class="py-2 px-4 bg-white text-gray-600 rounded-r-lg peer-checked:bg-orange-400 peer-checked:text-white">飲料</div>
             </label>
           </div>
         </div>
@@ -57,8 +57,8 @@
         <div class="mb-6">
           <button 
             id="randomButton"
-            class="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 text-lg font-medium rounded-lg flex items-center justify-center gap-2"
-          >
+            class="w-full btn-custom text-white py-3 text-lg font-medium rounded-lg flex items-center justify-center gap-2"
+            >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12H9.5a4.5 4.5 0 0 1 0-9H13"/><path d="M3 12h7.5a4.5 4.5 0 0 0 0-9H6"/><path d="M21 12v.5a4.5 4.5 0 0 1-4.5 4.5H13"/><path d="M3 12v.5a4.5 4.5 0 0 0 4.5 4.5H6"/></svg>
             隨機選一個
           </button>
@@ -82,9 +82,9 @@
         <div class="bg-orange-300 border-none rounded-lg">
           <div class="p-4">
             <h3 class="text-lg font-bold text-gray-800 mb-4">店家清單</h3>
-            
+    
             <div class="w-full">
-              <div class="grid w-full grid-cols-2 mb-4 bg-orange-400 rounded-lg">
+              <div class="grid w-full grid-cols-2 mb-4 bg-orange-300 rounded-lg">
                 <button id="tabFood" class="tabs-trigger py-2 rounded-l-lg active">食物</button>
                 <button id="tabDrinks" class="tabs-trigger py-2 rounded-r-lg">飲料</button>
               </div>

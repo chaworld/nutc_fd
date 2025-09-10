@@ -5,6 +5,13 @@ body {
 
 /* 模擬 Tabs 元件的 data-[state=active] 樣式 */
 .tabs-trigger.active {
-  background-color: #f97316; /* orange-500 */
+  background-color: #ffB347; /* orange-500 */
   color: white;
+}
+.btn-custom {
+  background-color: #ffB347; /* 隨機按鈕 */
+}
+
+.btn-custom:hover {
+  background-color: #ffad3a; /* 滑鼠移上去時的顏色 */
 }

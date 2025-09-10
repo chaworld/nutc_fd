@@ -1,7 +1,6 @@
 /* 從 App.css 提取的自訂樣式 */
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  overflow: hidden; /* 很重要，隱藏容器外的內容，防止出現水平捲軸 */
 }
 
 /* 模擬 Tabs 元件的 data-[state=active] 樣式 */
@@ -15,39 +14,4 @@ body {
 
 .btn-custom:hover {
   background-color: #ffad3a; /* 滑鼠移上去時的顏色 */
-}
-
-/* --- 滑動頁面樣式 --- */
-
-/* App 容器設定 */
-#app-container {
-  display: flex;
-  width: 200vw; /* 兩個頁面的寬度 (使用 vw 確保佔滿視窗寬度) */
-  transition: transform 0.5s ease-in-out; /* 關鍵！滑動動畫 */
-}
-
-/* 共用的頁面樣式 */
-.page {
-  width: 100vw; /* 每個頁面佔滿一個視窗寬度 */
-  flex-shrink: 0; /* 防止頁面被壓縮 */
-  padding: 0 1rem; /* 模擬原本 body 的 p-4 效果 */
-  box-sizing: border-box; /* 確保 padding 不會影響寬度計算 */
-}
-
-/* 當容器有 .show-special class 時，向左移動 100vw 的寬度 */
-#app-container.show-special {
-  transform: translateX(-100vw);
-}
-
-
-/* 右上角按鈕的基礎樣式與過場動畫 */
-#goToSpecial {
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-
-/* 當滑動到第二頁時，隱藏右上角按鈕 */
-#app-container.show-special #goToSpecial {
-  opacity: 0;
-  transform: scale(0.8);
-  pointer-events: none; /* 讓按鈕在隱藏時無法被點擊 */
 }

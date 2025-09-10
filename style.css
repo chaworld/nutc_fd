@@ -1,0 +1,10 @@
+/* 從 App.css 提取的自訂樣式 */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* 模擬 Tabs 元件的 data-[state=active] 樣式 */
+.tabs-trigger.active {
+  background-color: #f97316; /* orange-500 */
+  color: white;
+}

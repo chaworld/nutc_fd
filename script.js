@@ -1,3 +1,40 @@
+// Emoji 的函式
+const getEmojiForType = (type) => {
+  const emojis = {
+    '火鍋': '🍲',
+    '日式料理': '🍣',
+    '飯食': '🍚',
+    '飯包': '🍱',
+    '滷味': '🥘',
+    '牛肉麵': '🍜',
+    '烏龍麵': '🍜',
+    '咖哩': '🍛',
+    '燉飯': '🥘',
+    '炒飯': '🍚',
+    '義式料理': '🍝',
+    '早午餐': '🍳',
+    '潛艇堡': '🥪',
+    '速食': '🍔',
+    '拉麵': '🍜',
+    '麵食': '🍜',
+    '韓式料理': '🥘',
+    '鐵板燒': '🍳',
+    '飯捲': '🍙',
+    '小吃': '🍢',
+    '炸物': '🍗',
+    '壽司': '🍣',
+    '麻辣鴨血': '🌶️',
+    '早餐': '🥞',
+    '燒肉丼飯': '🍚',
+    '健康餐盒': '🥗',
+    '義大利麵': '🍝',
+    '手搖飲': '🥤',
+    '咖啡': '☕️',
+    'default': '🍴' // 預設圖示
+  };
+  return emojis[type] || emojis['default'];
+};
+
 // 來自 App.jsx 的餐廳資料
 const restaurants = {
   food: [
@@ -101,10 +138,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const contentFood = document.getElementById('contentFood');
   const contentDrinks = document.getElementById('contentDrinks');
   
-  // ***修改***：用一個陣列來儲存選中的餐廳物件
+
   let currentSelectedRestaurants = [];
 
-  // ***修改***：開啟 Google Maps 的函式，現在會根據選中的餐廳數量決定行為
   const openGoogleMaps = () => {
     // 處理沒有選擇任何餐廳的狀況
     if (currentSelectedRestaurants.length === 0) {
@@ -186,9 +222,10 @@ document.addEventListener('DOMContentLoaded', () => {
     list.forEach(restaurant => {
       const div = document.createElement('div');
       div.className = 'flex items-center justify-between bg-white p-3 rounded-lg shadow-sm';
+      // ***這裡是被修改的地方***
       div.innerHTML = `
         <div class="flex items-center gap-3">
-          <div class="w-8 h-8 bg-orange-400 rounded-lg"></div>
+          <div class="w-8 h-8 flex items-center justify-center text-2xl">${getEmojiForType(restaurant.type)}</div>
           <div>
             <div class="font-medium text-gray-800">${restaurant.name}</div>
             <div class="text-sm text-gray-600">${restaurant.type}</div>
@@ -206,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 綁定事件
   randomButton.addEventListener('click', handleRandomSelect);
-  // ***修改***：按鈕現在直接呼叫 openGoogleMaps 函式
+
   openMapButton.addEventListener('click', openGoogleMaps);
 
   tabFood.addEventListener('click', () => {

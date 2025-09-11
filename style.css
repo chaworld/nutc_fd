@@ -3,11 +3,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
-/* 模擬 Tabs 元件的 data-[state=active] 樣式 */
-.tabs-trigger.active {
-  background-color: #ffB347; /* orange-500 */
-  color: white;
-}
+/* 確保按鈕顏色正確 */
 .btn-custom {
   background-color: #ffB347; /* 隨機按鈕 */
 }
@@ -15,3 +11,84 @@ body {
 .btn-custom:hover {
   background-color: #ffad3a; /* 滑鼠移上去時的顏色 */
 }
+
+/* Modal and Filter Styles */
+.filter-tag {
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  background-color: white;
+  color: #4a5568; /* text-gray-700 */
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid #e2e8f0; /* border-gray-300 */
+  transition: all 0.2s ease-in-out;
+}
+
+.filter-tag:hover {
+  background-color: #f7fafc; /* bg-gray-50 */
+}
+
+.filter-tag.active {
+  background-color: #ffB347; /* orange-500 */
+  color: white;
+  border-color: #ffB347;
+}
+
+/* Price Slider Styles */
+.price-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #ffB347;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 2px rgba(0,0,0,0.3);
+  margin-top: -7px; /* 垂直置中 */
+}
+
+.price-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #ffB347;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 2px rgba(0,0,0,0.3);
+}
+
+.price-slider::-webkit-slider-runnable-track {
+    background: #fed7aa; /* orange-200 */
+    height: 6px;
+    border-radius: 3px;
+}
+
+.price-slider::-moz-range-track {
+    background: #fed7aa; /* orange-200 */
+    height: 6px;
+    border-radius: 3px;
+}
+
+
+/* 美化捲軸 */
+#restaurantList::-webkit-scrollbar,
+#foodTypeFilters::-webkit-scrollbar {
+  width: 6px;
+}
+#restaurantList::-webkit-scrollbar-track,
+#foodTypeFilters::-webkit-scrollbar-track {
+  background: #fed7aa; /* orange-200 */
+  border-radius: 10px;
+}
+#restaurantList::-webkit-scrollbar-thumb,
+#foodTypeFilters::-webkit-scrollbar-thumb {
+  background: #fb923c; /* orange-400 */
+  border-radius: 10px;
+}
+#restaurantList::-webkit-scrollbar-thumb:hover,
+#foodTypeFilters::-webkit-scrollbar-thumb:hover {
+  background: #f97316; /* orange-500 */
+}
+

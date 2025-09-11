@@ -81,22 +81,17 @@
 
         <div class="bg-orange-300 border-none rounded-lg">
           <div class="p-4">
-            <h3 class="text-lg font-bold text-gray-800 mb-4">店家清單</h3>
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-lg font-bold text-gray-800">店家清單</h3>
+              <button id="filterButton" class="bg-white hover:bg-gray-50 text-gray-800 font-medium py-2 px-4 rounded-lg flex items-center gap-2 shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                篩選
+              </button>
+            </div>
     
             <div class="w-full">
-              <div class="grid w-full grid-cols-2 mb-4 bg-orange-300 rounded-lg">
-                <button id="tabFood" class="tabs-trigger py-2 rounded-l-lg active">食物</button>
-                <button id="tabDrinks" class="tabs-trigger py-2 rounded-r-lg">飲料</button>
-              </div>
-              
-              <div id="contentFood" class="space-y-2">
-                <div id="foodList" class="max-h-64 overflow-y-auto space-y-2">
-                  </div>
-              </div>
-              
-              <div id="contentDrinks" class="hidden space-y-2">
-                <div id="drinksList" class="max-h-64 overflow-y-auto space-y-2">
-                  </div>
+              <div id="restaurantList" class="max-h-[26rem] overflow-y-auto space-y-2 pr-2">
+                <!-- 店家列表將由 JavaScript 動態生成 -->
               </div>
             </div>
           </div>
@@ -104,13 +99,87 @@
 
         <div class="mt-6 text-center">
           <p class="text-gray-600 text-sm">
-            <a href="https://pine-swamp-64e.notion.site/1f64b71279d480008b2fcaf1522fd1d8" class="text-orange-500 hover:text-orange-600 underline" target="_blank">想新增食物? 點我</a>
+            <a href="https://pine-swamp-64e.notion.site/1f64b71279d480008b2fcaf1522fd1d8" class="text-orange-500 hover:text-orange-600 underline" target="_blank">想新增食物? 價格描述不合理? 點我</a>
           </p>
           <p >Made with ❤️ by onedream</p>
         </div>
       </div>
     </div>
 
+    <!-- Filter Modal -->
+    <div id="filterModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
+      <div id="modalContent" class="bg-orange-200 rounded-lg shadow-xl w-full max-w-sm p-6 transform scale-95 opacity-0 transition-all duration-300">
+        <div class="flex justify-between items-center mb-4">
+          <h4 class="text-xl font-bold text-gray-800">店家分類</h4>
+          <button id="closeModalButton" class="text-gray-600 hover:text-gray-800">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        
+        <div class="border-b border-orange-300 pb-4 mb-4">
+          <h5 class="text-md font-semibold text-gray-700 mb-3">主要分類</h5>
+          <div id="mainFilters" class="flex flex-wrap gap-2">
+            <!-- 主要分類按鈕將由 JavaScript 動態生成 -->
+          </div>
+        </div>
+
+        <div class="border-b border-orange-300 pb-4 mb-4">
+          <div class="flex justify-between items-center mb-3">
+             <h5 class="text-md font-semibold text-gray-700">價格上限</h5>
+             <span id="priceValue" class="font-semibold text-gray-800 w-24 text-center bg-white px-2 py-1 rounded-md text-sm"></span>
+          </div>
+          <div class="flex items-center gap-4">
+              <input type="range" id="priceSlider" class="w-full h-2 bg-orange-300 rounded-lg appearance-none cursor-pointer price-slider" min="0" max="500" step="10">
+          </div>
+        </div>
+
+        <div id="foodTypeFilterSection">
+            <h5 class="text-md font-semibold text-gray-700 mb-3">美食類型</h5>
+            <div id="foodTypeFilters" class="flex flex-wrap gap-2 max-h-40 overflow-y-auto">
+              <!-- 美食類型標籤將由 JavaScript 動態生成 -->
+            </div>
+        </div>
+
+        <div class="mt-6">
+          <button id="applyFilterButton" class="w-full btn-custom text-white py-3 text-lg font-medium rounded-lg">
+            套用
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Restaurant Detail Modal -->
+    <div id="detailModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
+      <div id="detailModalContent" class="bg-orange-200 rounded-lg shadow-xl w-full max-w-sm p-6 transform scale-95 opacity-0 transition-all duration-300">
+        <div class="flex justify-between items-center mb-4">
+          <h4 id="detailRestaurantName" class="text-2xl font-bold text-gray-800"></h4>
+          <button id="closeDetailModalButton" class="text-gray-600 hover:text-gray-800">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        
+        <div class="space-y-3 text-gray-700">
+          <p class="flex items-center gap-3">
+            <span class="text-lg" id="detailRestaurantEmoji"></span>
+            <span id="detailRestaurantType" class="font-semibold"></span>
+          </p>
+          <p id="detailRestaurantPrice" class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            <span class="font-semibold"></span>
+          </p>
+        </div>
+
+        <div class="mt-6">
+          <button id="detailMapButton" class="w-full bg-white hover:bg-gray-50 text-gray-800 border-gray-300 flex items-center justify-center gap-2 py-3 rounded-lg border font-semibold">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            在Google Map上查看
+          </button>
+        </div>
+      </div>
+    </div>
+
+
     <script src="script.js"></script>
   </body>
 </html>
+

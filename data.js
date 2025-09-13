@@ -97,9 +97,17 @@ const sanminRestaurants = {
 // 民生校區的資料 (目前為空，可後續新增)
 const minshengRestaurants = {
   food: [
-    // { name: '範例店家', type: '飯食', minPrice: 100, minPriceItem: '範例餐點', location: '民生路', googleMapsLink: '' },
+    { name: '範例店家', type: '飯食', minPrice: 100, minPriceItem: '範例餐點', location: '民生路', googleMapsLink: '' },
+    { name: 'Mr.Body健身舒肥水煮餐盒 三民店', type: '飯食', minPrice: 110, minPriceItem: '減重舒肥嫩雞胸', location: '民生路', googleMapsLink: '' },
+    { name: '三商巧福 府後門市', type: '麵食', minPrice: 150, minPriceItem: '牛肉炸醬麵', location: '民生路', googleMapsLink: '' },
+    { name: '多肉系Succulent Curry 濃厚咖哩', type: '日式料理', minPrice: 145, minPriceItem: '只有咖哩', location: '民生路', googleMapsLink: '' },
+    { name: 'Papa Josh Caffé 老喬義大利坊', type: '義式料理', minPrice: 200, minPriceItem: '固定店休星期二', location: '民生路', googleMapsLink: '' },
+    { name: '番茄紅了 健康廚房', type: '飯食', minPrice: 110, minPriceItem: '雞胸肉', location: '民生路', googleMapsLink: '' },
+    { name: '北方麵館', type: '麵食', minPrice: 70, minPriceItem: '酸辣湯麵(小)', location: '民生路', googleMapsLink: '' },
+    { name: '有養肌 - 低GI健康水煮餐盒', type: '飯食', minPrice: 130, minPriceItem: '四川辣味雞胸', location: '民生路', googleMapsLink: '' },
   ],
   drinks: [
-    // { name: '範例飲料店', type: '手搖飲', minPrice: 50, minPriceItem: '範例飲料', location: '民生路', googleMapsLink: '' },
+    { name: '阿鎮現榨果汁', type: '手搖飲', minPrice: 60, minPriceItem: '綜合果汁', location: '民生路', googleMapsLink: '' },
+    { name: '別茶人', type: '手搖飲', minPrice: 50, minPriceItem: '珍珠奶茶', location: '民生路', googleMapsLink: '' }
   ]
 };

@@ -1,17 +1,17 @@
+// api/getInspiration.js
+
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${GEMINI_API_KEY}`;
 
-// 允許的來源清單
 const allowedOrigins = [
-  'https://chaworld.github.io/nutc_fd/', // 你的 GitHub Pages 網址
-  'http://127.0.0.1:5500',     // 本地端測試用的 Live Server 網址
-  'http://localhost:5500',      // 本地端測試用的 Live Server 網址
+  'https://chaworld.github.io',
+  'http://127.0.0.1:5500',
+  'http://localhost:5500'
 ];
 
 export default async function handler(req, res) {
-  // --- CORS 跨來源請求處理 ---
+  // --- CORS Handling ---
   const origin = req.headers.origin;
-  // 檢查請求來源是否在允許清單中
   if (allowedOrigins.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
@@ -19,19 +19,24 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
 
-  // 回應瀏覽器的 "Preflight" OPTIONS 請求
+  //正確回應 Preflight Request ★★★
   if (req.method === 'OPTIONS') {
     res.status(200).end();
-    return;
+    return; // 直接結束，不執行後續程式碼
   }
   
-  // --- 主要 API 邏輯 ---
+  // --- Main Logic ---
   if (req.method !== 'POST') {
     res.setHeader('Allow', ['POST']);
     return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 
   try {
+    // 檢查 API Key 是否存在
+    if (!GEMINI_API_KEY) {
+      throw new Error("Missing GEMINI_API_KEY environment variable on Vercel.");
+    }
+
     const { foodTypes, drinkTypes, campus } = req.body;
     
     const prompt = `你是一位親切的美食搭配小助理。請根據以下在「${campus}」附近有的食物和飲料類型，為我生成三組創意、有趣、吸引人的美食搭配建議。

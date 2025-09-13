@@ -2,7 +2,7 @@
 ├── api/
 │   └── getInspiration.js  (Vercel 後端函式，已加入 CORS)
 │
-├── main/
+├── docs/                  (github pages要的名字)
 │   ├── data.js            (集中管理的餐廳資料)
 │   ├── index.html         (主校區/三民校區 前端頁面)
 │   ├── minsheng.html      (民生校區 前端頁面)

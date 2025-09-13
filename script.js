@@ -58,6 +58,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const detailRestaurantPrice = document.getElementById('detailRestaurantPrice').querySelector('span');
   const detailMapButton = document.getElementById('detailMapButton');
 
+  // Gemini API elements
+  const inspirationButton = document.getElementById('inspirationButton');
+  const inspirationModal = document.getElementById('inspirationModal');
+  const inspirationModalContent = document.getElementById('inspirationModalContent');
+  const closeInspirationModalButton = document.getElementById('closeInspirationModalButton');
+  const inspirationResult = document.getElementById('inspirationResult');
+
   // Find max price for slider range
   const allRestaurants = [...restaurants.food, ...restaurants.drinks];
   const maxPrice = Math.max(...allRestaurants.map(r => r.minPrice || 0), 100); // Default max to 100 if no items
@@ -188,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
         <button class="map-button text-gray-600 hover:text-gray-800 p-2 z-10">
-          <svg xmlns="http://www.w.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
         </button>
       `;
       div.querySelector('.map-button').onclick = (e) => {
@@ -268,10 +275,12 @@ document.addEventListener('DOMContentLoaded', () => {
     filterModal.classList.remove('hidden');
     setTimeout(() => {
         modalContent.classList.remove('scale-95', 'opacity-0');
+        modalContent.classList.add('scale-100', 'opacity-100');
     }, 10);
   };
 
   const closeFilterModal = () => {
+    modalContent.classList.remove('scale-100', 'opacity-100');
     modalContent.classList.add('scale-95', 'opacity-0');
     setTimeout(() => {
         filterModal.classList.add('hidden');
@@ -287,7 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
     detailRestaurantType.textContent = restaurant.type;
     if(restaurant.minPrice && restaurant.minPriceItem) {
         detailRestaurantPrice.parentElement.classList.remove('hidden');
-        detailRestaurantPrice.textContent = `$${restaurant.minPrice} 起 (${restaurant.minPriceItem})`;
+        detailRestaurantPrice.textContent = `$${restaurant.minPrice} 左右 (${restaurant.minPriceItem})`;
     } else {
         detailRestaurantPrice.parentElement.classList.add('hidden');
     }
@@ -297,18 +306,87 @@ document.addEventListener('DOMContentLoaded', () => {
     detailModal.classList.remove('hidden');
     setTimeout(() => {
         detailModalContent.classList.remove('scale-95', 'opacity-0');
+        detailModalContent.classList.add('scale-100', 'opacity-100');
     }, 10);
   };
 
   const closeDetailModal = () => {
+    detailModalContent.classList.remove('scale-100', 'opacity-100');
     detailModalContent.classList.add('scale-95', 'opacity-0');
     setTimeout(() => {
         detailModal.classList.add('hidden');
     }, 300);
   };
+
+  // --- Gemini API Integration ---
+  const getInspiration = async () => {
+      inspirationResult.innerHTML = `<div class="flex justify-center items-center"><svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-purple-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><p class="text-lg">✨ 正在為您尋找靈感...</p></div>`;
+      inspirationModal.classList.remove('hidden');
+      setTimeout(() => {
+        inspirationModalContent.classList.remove('scale-95', 'opacity-0');
+        inspirationModalContent.classList.add('scale-100', 'opacity-100');
+      }, 10);
+
+      const foodTypes = [...new Set(restaurants.food.map(r => r.type))].filter(t => t !== 'default');
+      const drinkTypes = [...new Set(restaurants.drinks.map(r => r.type))];
+
+      let prompt;
+      if (foodTypes.length === 0) {
+          prompt = `我是一位在台灣台中科技大學民生校區的學生，肚子餓了但不知道要吃什麼。可以請你用活潑的語氣，為我推薦三種附近可能找得到的午餐建議嗎？請用繁體中文回答。`;
+      } else {
+          prompt = `我是一位在台灣台中科技大學（${campusName === '一中' ? '三民校區' : '民生校區'}）的學生，對於午餐選擇感到困難。這裡有以下的餐廳類型：美食有「${foodTypes.join('、')}」，飲料有「${drinkTypes.join('、')}」。請你根據這些類型，用活潑且吸引人的語氣，為我創造三個絕佳的餐飲搭配建議。每個建議都要包含一個主食和一杯飲料。請用繁體中文 markdown 格式回答，包含標題和點列。`;
+      }
+
+      try {
+          // *** 重要變更 ***
+          // 不再直接呼叫 Google API，而是呼叫我們自己的後端代理 API
+          const apiUrl = 'https://nutc-4o11wqqrs-chas-projects-b6d1864e.vercel.app/'; 
+          
+          const response = await fetch(apiUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ prompt: prompt })
+          });
+
+          if (!response.ok) {
+              throw new Error(`API call failed with status: ${response.status}`);
+          }
+
+          const result = await response.json();
+          const candidate = result.candidates?.[0];
+          
+          if (candidate && candidate.content?.parts?.[0]?.text) {
+              let formattedText = candidate.content.parts[0].text;
+              // 將 Markdown 格式轉換為 HTML，使其美觀
+              formattedText = formattedText
+                  .replace(/### (.*)/g, '<h3 class="text-xl font-bold text-gray-800 mt-4 mb-2">$1</h3>')
+                  .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                  .replace(/^\* (.*$)/gm, '<p class="mb-2 ml-4 text-gray-600 list-item list-disc">$&</p>')
+                  .replace(/\n/g, '<br>');
+
+              inspirationResult.innerHTML = formattedText;
+          } else {
+              inspirationResult.innerHTML = '<p>抱歉，無法取得建議。請稍後再試一次。</p>';
+          }
+
+      } catch (error) {
+          console.error("Client-side Error:", error);
+          inspirationResult.innerHTML = '<p>糟糕，靈感枯竭了... 請檢查網路連線或稍後再試。</p>';
+      }
+  };
   
+  const closeInspirationModal = () => {
+    inspirationModalContent.classList.remove('scale-100', 'opacity-100');
+    inspirationModalContent.classList.add('scale-95', 'opacity-0');
+    setTimeout(() => {
+        inspirationModal.classList.add('hidden');
+    }, 300);
+  };
+
+  // --- Event Listeners ---
   randomButton.addEventListener('click', handleRandomSelect);
   openMapButton.addEventListener('click', openGoogleMaps);
+  
   filterButton.addEventListener('click', openFilterModal);
   closeModalButton.addEventListener('click', closeFilterModal);
   filterModal.addEventListener('click', (e) => {
@@ -319,9 +397,16 @@ document.addEventListener('DOMContentLoaded', () => {
     renderRestaurantList();
     closeFilterModal();
   });
+
   closeDetailModalButton.addEventListener('click', closeDetailModal);
   detailModal.addEventListener('click', (e) => {
     if (e.target === detailModal) closeDetailModal();
+  });
+
+  inspirationButton.addEventListener('click', getInspiration);
+  closeInspirationModalButton.addEventListener('click', closeInspirationModal);
+  inspirationModal.addEventListener('click', (e) => {
+    if (e.target === inspirationModal) closeInspirationModal();
   });
 
   renderRestaurantList();

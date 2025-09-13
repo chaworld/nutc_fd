@@ -38,13 +38,19 @@
           </div>
         </div>
 
-        <div class="mb-6">
+        <div class="mb-6 space-y-3">
           <button
             id="randomButton"
             class="w-full btn-custom text-white py-3 text-lg font-medium rounded-lg flex items-center justify-center gap-2"
             >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12H9.5a4.5 4.5 0 0 1 0-9H13"/><path d="M3 12h7.5a4.5 4.5 0 0 0 0-9H6"/><path d="M21 12v.5a4.5 4.5 0 0 1-4.5 4.5H13"/><path d="M3 12v.5a4.5 4.5 0 0 0 4.5 4.5H6"/></svg>
             隨機選一個
+          </button>
+          <button
+            id="inspirationButton"
+            class="w-full btn-custom text-white py-3 text-lg font-medium rounded-lg flex items-center justify-center gap-2"
+            >
+            ✨ 給我靈感
           </button>
         </div>
 
@@ -144,9 +150,25 @@
         </div>
       </div>
     </div>
+    
+    <!-- Gemini Inspiration Modal -->
+    <div id="inspirationModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 hidden">
+      <div id="inspirationModalContent" class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 transform scale-95 opacity-0 transition-all duration-300">
+          <div class="flex justify-between items-center mb-4">
+              <h4 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500">靈感菇 靈感菇</h4>
+              <button id="closeInspirationModalButton" class="text-gray-500 hover:text-gray-800">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              </button>
+          </div>
+          <div id="inspirationResult" class="text-gray-700 space-y-4 leading-relaxed max-h-[60vh] overflow-y-auto pr-2">
+              <!-- Gemini API response will be injected here -->
+          </div>
+      </div>
+    </div>
 
     <!-- 載入共用的 data.js 和 script.js -->
     <script src="data.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
+

@@ -97,7 +97,7 @@ const sanminRestaurants = {
 // 民生校區的資料 (目前為空，可後續新增)
 const minshengRestaurants = {
   food: [
-    { name: '範例店家', type: '飯食', minPrice: 100, minPriceItem: '範例餐點', location: '民生路', googleMapsLink: '' },
+    { name: '民生食物', type: '飯食', minPrice: 1, minPriceItem: '不是阿 什麼荒郊野嶺', location: '民生路', googleMapsLink: '' },
     { name: 'Mr.Body健身舒肥水煮餐盒 三民店', type: '飯食', minPrice: 110, minPriceItem: '減重舒肥嫩雞胸', location: '民生路', googleMapsLink: '' },
     { name: '三商巧福 府後門市', type: '麵食', minPrice: 150, minPriceItem: '牛肉炸醬麵', location: '民生路', googleMapsLink: '' },
     { name: '多肉系Succulent Curry 濃厚咖哩', type: '日式料理', minPrice: 145, minPriceItem: '只有咖哩', location: '民生路', googleMapsLink: '' },

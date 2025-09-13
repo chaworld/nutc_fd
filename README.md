@@ -1,2 +1,2 @@
 # 中科大隨機食物選擇器
-整修中
+https://chaworld.github.io/nutc_fd/

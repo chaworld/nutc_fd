@@ -5,12 +5,148 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>民生校區美食</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
   </head>
-  <body class="min-h-screen bg-gradient-to-br from-orange-100 to-orange-200 p-4 flex items-center justify-center">
-    <div class="text-center">
-      <h1 class="text-4xl font-bold text-gray-800 mb-4">民生校區</h1>
-      <p class="text-xl text-gray-600">🚧 整修中...</p>
-      <a href="index.html" class="mt-8 inline-block bg-orange-400 text-white py-2 px-6 rounded-full text-lg hover:bg-orange-500 transition">返回主頁</a>
+  <body id="minsheng-page" class="min-h-screen bg-gradient-to-br from-orange-100 to-orange-200 p-4">
+
+    <!-- 將 root 設為 relative，以便定位返回按鈕 -->
+    <div id="root" class="relative">
+      <!-- 返回主頁按鈕 -->
+      <a href="index.html" class="absolute top-4 right-4 bg-orange-400 text-white py-2 px-4 rounded-full text-sm hover:bg-orange-500 transition z-10">返回主頁</a>
+
+      <div class="max-w-md mx-auto">
+        <div class="text-center mb-8 pt-8">
+          <h1 class="text-3xl font-bold text-gray-800 mb-2">民生校區吃什麼？</h1>
+          <p class="text-gray-600 text-sm">🚧 施工中，店家資訊陸續新增...</p>
+        </div>
+
+        <div class="mb-4 text-center">
+          <p class="text-gray-700 mb-2 font-medium">想吃點什麼？</p>
+          <div class="inline-flex rounded-lg shadow-sm">
+            <label class="cursor-pointer">
+              <input type="radio" name="category" value="all" class="sr-only peer" checked>
+              <div class="py-2 px-4 bg-white text-gray-600 rounded-l-lg peer-checked:bg-orange-400 peer-checked:text-white">都要</div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="category" value="food" class="sr-only peer">
+              <div class="py-2 px-4 bg-white text-gray-600 peer-checked:bg-orange-400 peer-checked:text-white">食物</div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="category" value="drinks" class="sr-only peer">
+              <div class="py-2 px-4 bg-white text-gray-600 rounded-r-lg peer-checked:bg-orange-400 peer-checked:text-white">飲料</div>
+            </label>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <button
+            id="randomButton"
+            class="w-full btn-custom text-white py-3 text-lg font-medium rounded-lg flex items-center justify-center gap-2"
+            >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12H9.5a4.5 4.5 0 0 1 0-9H13"/><path d="M3 12h7.5a4.5 4.5 0 0 0 0-9H6"/><path d="M21 12v.5a4.5 4.5 0 0 1-4.5 4.5H13"/><path d="M3 12v.5a4.5 4.5 0 0 0 4.5 4.5H6"/></svg>
+            隨機選一個
+          </button>
+        </div>
+
+        <div id="selectedRestaurantCard" class="hidden mb-6 bg-orange-300 border-none rounded-lg">
+          <div class="p-4 text-center">
+            <h2 id="selectedRestaurantName" class="text-xl font-bold text-gray-800 mb-2"></h2>
+            <div class="flex justify-center mt-3">
+              <button
+                id="openMapButton"
+                class="bg-white hover:bg-gray-50 text-gray-800 border-gray-300 flex items-center gap-2 py-2 px-4 rounded-lg border"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                在Google Map上查看
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-orange-300 border-none rounded-lg">
+          <div class="p-4">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-lg font-bold text-gray-800">店家清單</h3>
+              <button id="filterButton" class="bg-white hover:bg-gray-50 text-gray-800 font-medium py-2 px-4 rounded-lg flex items-center gap-2 shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                篩選
+              </button>
+            </div>
+
+            <div class="w-full">
+              <div id="restaurantList" class="max-h-[26rem] overflow-y-auto space-y-2 pr-2">
+                <!-- 店家列表將由 JavaScript 動態生成 -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- Filter Modal (結構與 index.html 相同) -->
+    <div id="filterModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
+      <div id="modalContent" class="bg-orange-200 rounded-lg shadow-xl w-full max-w-sm p-6 transform scale-95 opacity-0 transition-all duration-300">
+        <div class="flex justify-between items-center mb-4">
+          <h4 class="text-xl font-bold text-gray-800">店家分類</h4>
+          <button id="closeModalButton" class="text-gray-600 hover:text-gray-800">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="border-b border-orange-300 pb-4 mb-4">
+          <h5 class="text-md font-semibold text-gray-700 mb-3">主要分類</h5>
+          <div id="mainFilters" class="flex flex-wrap gap-2"></div>
+        </div>
+        <div class="border-b border-orange-300 pb-4 mb-4">
+          <div class="flex justify-between items-center mb-3">
+             <h5 class="text-md font-semibold text-gray-700">價格上限</h5>
+             <span id="priceValue" class="font-semibold text-gray-800 w-24 text-center bg-white px-2 py-1 rounded-md text-sm"></span>
+          </div>
+          <div class="flex items-center gap-4">
+              <input type="range" id="priceSlider" class="w-full h-2 bg-orange-300 rounded-lg appearance-none cursor-pointer price-slider" min="0" max="500" step="10">
+          </div>
+        </div>
+        <div id="foodTypeFilterSection">
+            <h5 class="text-md font-semibold text-gray-700 mb-3">美食類型</h5>
+            <div id="foodTypeFilters" class="flex flex-wrap gap-2 max-h-40 overflow-y-auto"></div>
+        </div>
+        <div class="mt-6">
+          <button id="applyFilterButton" class="w-full btn-custom text-white py-3 text-lg font-medium rounded-lg">
+            套用
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Restaurant Detail Modal (結構與 index.html 相同) -->
+    <div id="detailModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
+      <div id="detailModalContent" class="bg-orange-200 rounded-lg shadow-xl w-full max-w-sm p-6 transform scale-95 opacity-0 transition-all duration-300">
+        <div class="flex justify-between items-center mb-4">
+          <h4 id="detailRestaurantName" class="text-2xl font-bold text-gray-800"></h4>
+          <button id="closeDetailModalButton" class="text-gray-600 hover:text-gray-800">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="space-y-3 text-gray-700">
+          <p class="flex items-center gap-3">
+            <span class="text-lg" id="detailRestaurantEmoji"></span>
+            <span id="detailRestaurantType" class="font-semibold"></span>
+          </p>
+          <p id="detailRestaurantPrice" class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            <span class="font-semibold"></span>
+          </p>
+        </div>
+        <div class="mt-6">
+          <button id="detailMapButton" class="w-full bg-white hover:bg-gray-50 text-gray-800 border-gray-300 flex items-center justify-center gap-2 py-3 rounded-lg border font-semibold">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            在Google Map上查看
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 載入共用的 data.js 和 script.js -->
+    <script src="data.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>

@@ -44,7 +44,7 @@ export default async function handler(req, res) {
     食物類型選項：${foodTypes.join('、') || '無'}
     飲料類型選項：${drinkTypes.join('、') || '無'}
 
-    請用活潑的語氣，建議包含一個獨特的標題,#用markdown語法回覆，#限制20字內。請直接開始生成建議，開頭的問候語:靈感菇哩菇哩 就決定是你。`;
+    請用活潑的語氣，建議包含一個獨特的標題，#限制20字內，排版整齊。請直接開始生成建議，開頭的問候語:靈感菇哩菇哩 就決定是:。`;
 
     const geminiResponse = await fetch(API_URL, {
       method: 'POST',

@@ -39,12 +39,12 @@ export default async function handler(req, res) {
 
     const { foodTypes, drinkTypes, campus } = req.body;
     
-    const prompt = `你是一位親切的美食搭配小助理。請根據以下在「${campus}」附近有的食物和飲料類型，為我生成三組創意、有趣、吸引人的美食搭配建議。
+    const prompt = `你是一位親切的美食搭配小助理。請根據以下在「${campus}」附近有的食物和飲料類型，為我生成一組創意、有趣、吸引人的美食搭配建議。
 
     食物類型選項：${foodTypes.join('、') || '無'}
     飲料類型選項：${drinkTypes.join('、') || '無'}
 
-    請用活潑的語氣，每組建議包含一個獨特的標題（用 **粗體** 標示），並簡短說明為什麼這樣搭配很棒。請直接開始生成建議，不要有開頭的問候語。`;
+    請用活潑的語氣，建議包含一個獨特的標題,#用markdown語法回覆，#限制20字內。請直接開始生成建議，開頭的問候語:靈感菇哩菇哩 就決定是你。`;
 
     const geminiResponse = await fetch(API_URL, {
       method: 'POST',

@@ -39,7 +39,7 @@ export default async function handler(req, res) {
 
     const { foodTypes, drinkTypes, campus } = req.body;
     
-    const prompt = `身為美食搭配小助理，請從「${campus}」的「${foodTypes.join('、')}」與「${drinkTypes.join('、')}」中，創造一個驚喜組合。請給它一個 **#20字內的說明**，並用活潑語氣介紹它。開頭就說：「靈感菇哩菇哩，就決定是：」`;
+    const prompt = `身為美食搭配小助理，請從「${campus}」的「${foodTypes.join('、')}」與「${drinkTypes.join('、')}」中，隨機創造一個組合，避免與上一回相同。請給它一個 **#20字內的說明**，並用活潑語氣介紹它。開頭就說：「靈感菇哩菇哩，就決定是：」`;
 
     const geminiResponse = await fetch(API_URL, {
       method: 'POST',

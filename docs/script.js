@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
     inspirationResult.innerHTML = `
       <div class="flex flex-col items-center justify-center p-8">
         <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
-        <p class="mt-4 text-gray-600">正在呼叫靈感小助理...</p>
+        <p class="mt-4 text-gray-600">正在呼叫靈感菇...</p>
       </div>`;
 
     const foodTypes = [...new Set(restaurants.food.map(r => r.type))];
@@ -358,21 +358,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (!response.ok) {
-            throw new Error(`伺服器錯誤: ${response.status}`);
+            const errorData = await response.json().catch(() => ({ error: `伺服器錯誤: ${response.status}` }));
+            throw new Error(errorData.error);
         }
 
         const data = await response.json();
         
-        // 將純文字回應轉換為 HTML
-        const formattedResponse = data.text
-            .replace(/\*\*(.*?)\*\*/g, '<strong class="text-orange-600">$1</strong>') // 粗體
-            .replace(/\n/g, '<br>'); // 換行
+        // ★★★ 安全性更新：避免使用 .innerHTML ★★★
+        inspirationResult.innerHTML = ''; // 清空舊內容
+        const lines = data.text.split('\n');
 
-        inspirationResult.innerHTML = formattedResponse;
+        lines.forEach(line => {
+            // 跳過空行，但可以保留它們來做間距
+            if (line.trim() === '') return;
+
+            const p = document.createElement('p');
+            p.className = 'mb-3'; // 增加段落間距
+
+            // 簡易的 Markdown 粗體解析
+            const parts = line.split('**');
+            parts.forEach((part, index) => {
+                if (index % 2 === 1) { // 這是 ** 之間的部分，應為粗體
+                    const strong = document.createElement('strong');
+                    strong.className = 'text-orange-600';
+                    strong.textContent = part;
+                    p.appendChild(strong);
+                } else { // 這是正常文字部分
+                    p.appendChild(document.createTextNode(part));
+                }
+            });
+            inspirationResult.appendChild(p);
+        });
 
     } catch (error) {
         console.error("無法取得靈感:", error);
-        inspirationResult.innerHTML = `<p class="text-red-500 text-center">糟糕，靈感斷線了！<br>請稍後再試一次。</p>`;
+        inspirationResult.innerHTML = `<p class="text-red-500 text-center">糟糕，靈感斷線了！<br>${error.message}</p>`;
     }
   };
 
@@ -409,4 +429,3 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initial Render
   renderRestaurantList();
 });
-

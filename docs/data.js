@@ -65,6 +65,13 @@ const sanminRestaurants = {
     { name: '云居雞白湯製麵所', type: '拉麵', minPrice: 180, minPriceItem: '拉麵', location: '一中街', googleMapsLink: '' } ,
     { name: '大鬍子', type: '小吃', minPrice: 50, minPriceItem: '玉米湯餃', location: '一中街', googleMapsLink: '' } ,
     { name: '聚一波義式料理', type: '義式料理', minPrice: 200, minPriceItem: '聽說備註學生會有優惠，或許值得一試', location: '一中街', googleMapsLink: '' },
+    { name: '就醬拌', type: '麵食', minPrice: 80, minPriceItem: '醬拌麵', location: '一中街', googleMapsLink: '' },
+    { name: '姜蘇涼麵一中店', type: '麵食', minPrice: 55, minPriceItem: '涼麵', location: '一中街', googleMapsLink: '' },
+    { name: '挖咖哩', type: '日式料理', minPrice: 170, minPriceItem: '匿名推薦: 雞肉烏龍麵、派焗烤咖哩系列、波浪薯條', location: '一中街', googleMapsLink: '' },
+    { name: '怕怕。Llama手作春醬', type: '韓式料理', minPrice: 130, minPriceItem: '匿名推薦: 起司年糕', location: '一中街', googleMapsLink: '' },
+    { name: '麵小姐(miss pasta)一中店', type: '義大利麵', minPrice: 120, minPriceItem: '匿名推薦: 白醬雞肉燉飯+焗烤', location: '一中街', googleMapsLink: '' },
+    { name: '萊萊美食飯館 型男牛排館', type: '小吃', minPrice: 60, minPriceItem: '匿名推薦: 火腿炒飯', location: '一中街', googleMapsLink: '' },
+    { name: '一湯匙 韓食料理', type: '韓式料理', minPrice: 270, minPriceItem: '匿名推薦: 濃牛奶部隊嫩豆腐煲', location: '一中街', googleMapsLink: '' },
     { name: '空氣', type: 'default', minPrice: 1, minPriceItem: '每次教授一直催的時候需要頂樓新鮮氧氣', location: '臺中科技大學', googleMapsLink: 'https://maps.google.com/?q=國立臺中科技大學 資訊與流通學院 頂樓' }
   ],
   drinks: [
@@ -74,7 +81,7 @@ const sanminRestaurants = {
     { name: '阿里山鐵道紅茶', type: '手搖飲', minPrice: 30, minPriceItem: '紅茶', location: '一中街', googleMapsLink: '' },
     { name: '大茗', type: '手搖飲', minPrice: 30, minPriceItem: '四季春青茶', location: '一中街', googleMapsLink: '' },
     { name: '八曜和茶', type: '手搖飲', minPrice: 35, minPriceItem: '和風茶', location: '一中街', googleMapsLink: '' },
-    { name: '先喝道', type: '手搖飲', minPrice: 35, minPriceItem: '英式紅茶', location: '一中街', googleMapsLink: '' },
+    { name: '鮮喝道', type: '手搖飲', minPrice: 35, minPriceItem: '英式紅茶', location: '一中街', googleMapsLink: '' },
     { name: '彰北', type: '手搖飲', minPrice: 25, minPriceItem: '紅茶', location: '一中街', googleMapsLink: '' },
     { name: '米克夏', type: '手搖飲', minPrice: 30, minPriceItem: '茉莉原淬綠茶', location: '一中街', googleMapsLink: '' },
     { name: '路上 Camino', type: '手搖飲', minPrice: 30, minPriceItem: '紅茶', location: '一中街', googleMapsLink: '' },
@@ -90,11 +97,12 @@ const sanminRestaurants = {
     { name: '大苑子', type: '手搖飲', minPrice: 30, minPriceItem: '四季春青茶', location: '一中街', googleMapsLink: '' },
     { name: '可不可', type: '手搖飲', minPrice: 30, minPriceItem: '熟成紅茶 (中)', location: '一中街', googleMapsLink: '' },
     { name: '萬波', type: '手搖飲', minPrice: 30, minPriceItem: '島嶼紅茶 (中)', location: '一中街', googleMapsLink: '' },
+    { name: '功夫茶', type: '手搖飲', minPrice: 40, minPriceItem: '功夫茶王' , location: '學士店', googleMapsLink: '' },
     { name: '紅濃紅', type: '手搖飲', minPrice: 30, minPriceItem: '紅茶', location: '一中街', googleMapsLink: '' }
   ]
 };
 
-// 民生校區的資料 (目前為空，可後續新增)
+// 民生校區的資料
 const minshengRestaurants = {
   food: [
     { name: '民生食物', type: '飯食', minPrice: 1, minPriceItem: '不是阿 什麼荒郊野嶺', location: '民生路', googleMapsLink: '' },

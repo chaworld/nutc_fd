@@ -16,6 +16,16 @@ const escapeHtml = (value = '') =>
 
 const loadRestaurantData = () => {
   const scriptContent = fs.readFileSync(dataPath, 'utf8');
+  const blockedTokens = /\b(require|process|globalThis|Function|eval|import|export)\b/;
+
+  if (blockedTokens.test(scriptContent)) {
+    throw new Error('Unexpected executable token found in docs/data.js');
+  }
+
+  if (!/const\s+sanminRestaurants\s*=/.test(scriptContent) || !/const\s+minshengRestaurants\s*=/.test(scriptContent)) {
+    throw new Error('docs/data.js does not contain expected restaurant declarations');
+  }
+
   const context = {};
 
   vm.runInNewContext(
